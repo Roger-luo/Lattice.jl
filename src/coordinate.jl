@@ -1,4 +1,4 @@
-struct Coordinate{N, T}
+struct Coordinate{N, T <: Integer}
     coordinates::NTuple{N, T}
     Coordinate{N}(xs::NTuple{N, T}) where {N, T} = new{N, T}(xs)
     Coordinate(xs::NTuple{N, T}) where {N, T} = new{N, T}(xs)

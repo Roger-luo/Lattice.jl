@@ -28,14 +28,14 @@ end
 for L in [:Triangular, :Honeycomb, :Kagome]
 
     @eval ==(a::$L{B}, b::$L{B}) where B <: NTuple{2, AbstractBoundary} = (
-        a.dims === b.dims
-        && a.bcs === b.bcs
+        dimensions(a) === dimensions(b)
+        && boundaryconditions(a) === boundaryconditions(b)
         && a.translation_vectors == b.translation_vectors
     )
-    @eval ==(a::$L, b::$L) = false
 
     @eval ndims(::$L) = 2
 
+    @eval primitivevectors(::$L) = [1.0 cosd(60); 0.0 sind(60)]
     @eval metric(::$L) = Symmetric([1.0 0.5; 0.5 1.0])
     @eval ismetricdiag(::$L) = false
 

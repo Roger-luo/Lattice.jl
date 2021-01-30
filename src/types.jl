@@ -17,6 +17,21 @@ _ncoords(::Val{true}, l::AbstractLattice) = 1 + ndims(l)
 _ncoords(::Val{false}, l::AbstractLattice) = ndims(l)
 ncoordinates(l::AbstractLattice) = _ncoords(hasunitcell(l), l)
 
+latticeconstants(l::AbstractLattice) = l.lcs
+boundaryconditions(l::AbstractLattice) = l.bcs
+dimensions(l::AbstractLattice) = l.dims
+size(l::AbstractLattice) = dimensions(l)
+size(l::AbstractLattice, d::Int) = size(l)[d]
+
+primitivevectors(::AbstractLattice) = error("Not implemented")
+metric(l::AbstractLattice) = (A = primitivevectors(l); A' * A)
+ismetricdiag(l::AbstractLattice) = isdiag(metric(l))
+
+==(a::L, b::L) where {L <: AbstractLattice} = false
+
+
+
+
 
 function size(::Val{true}, l::AbstractLattice, dim::Int)
     if dim > ncoordinates(l)
